@@ -19,7 +19,7 @@ class MediaFactory extends Factory
     {
         return [
             'media_title' => $this->faker->name(),
-            'media_photo' => 'default_picture'.'jpg',
+            'media_photo' => 'default_picture'.'.jpeg',
             'media_url' => fake()->url(),
             'media_type' => fake()->name(),
             'media_description' => fake()->paragraph(),

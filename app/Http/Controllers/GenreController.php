@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
+use App\Models\Media;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -11,7 +13,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $genres = Genre::all();
+        return view('genre.index', compact('genres'));
     }
 
     /**
@@ -19,7 +22,8 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+       $genres = Genre::all();
+       return view('genre.create', compact('genres'));
     }
 
     /**
@@ -27,7 +31,14 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'genre_name' => 'required',
+        ]);
+        Genre::create([
+            'genre_name' => $request->genre_name,
+        ]);
+        return redirect()->route('genre.index')
+            ->with('success', 'Genre ajouté avec succès !');
     }
 
     /**
@@ -35,7 +46,9 @@ class GenreController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $media = Media::where('genre_id',$id)->get();
+
+        return view('genre.show',compact('media'));
     }
 
     /**
@@ -43,7 +56,8 @@ class GenreController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $genres = Media::findOrFail($id);
+        return view('genre.edit', compact('genres'));
     }
 
     /**
@@ -51,7 +65,11 @@ class GenreController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updateGenre = $request->validate([
+            'genre_name' => 'required',
+        ]);
+        Genre::whereId($id)->update($updateGenre);
+        return redirect()->route('genres.index')->with('success','La genre mis à jour avec succès !');
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
+use App\Models\User;
+use App\Models\Media;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller
@@ -11,7 +14,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $media = Media::all();
+        return view('media.index', compact('media'));
     }
 
     /**
@@ -35,7 +39,20 @@ class MediaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $note = Note::where('media_id',$id)->get();
+        $user = User::where('id',$id)->get();
+        $media = Media::where('id',$id)->get();
+
+        $count = $note->count();
+
+        if ($count > 0) {
+            $final_note = $note->sum('note_nmbr') / $count;
+        } else {
+            $final_note = 0;
+        }
+
+        return view('media.show', compact('note','final_note','media'));
+
     }
 
     /**
