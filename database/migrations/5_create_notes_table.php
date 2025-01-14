@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('note_nmbr');
             $table->text('comment');
 
-            $table->foreignId('medias_id')->constrained()->onDelete('cascade');
+            $table->foreignId('media_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }

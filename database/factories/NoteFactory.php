@@ -23,7 +23,7 @@ class NoteFactory extends Factory
             'comment' => fake()-> paragraph(),
 
             'user_id' => rand(1, User::count()),
-            'medias_id' => rand(1, Media::count()),
+            'media_id' => rand(1, Media::count()),
         ];
     }
 }
