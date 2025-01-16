@@ -21,7 +21,7 @@ class MediaFactory extends Factory
             'media_title' => $this->faker->name(),
             'media_photo' => 'default_picture'.'.jpeg',
             'media_url' => fake()->url(),
-            'media_type' => fake()->name(),
+            'media_type' => fake()->randomElement(['film', 'serie']),
             'media_description' => fake()->paragraph(),
 
             'genre_id' => rand(1, Genre::count()),

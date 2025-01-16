@@ -16,8 +16,23 @@ class MediaController extends Controller
      */
     public function index()
     {
+        $notes = Note::query()
+            // Count pour conter le nombre de note AVG pour note moyenne
+            ->selectRaw('media_id, COUNT(note_nmbr) as total_ratings, AVG(note_nmbr) as average_rating')
+            //  Tous les media avec même 'media_id' sont regroupés.
+            ->groupBy('media_id') 
+            // On recuper seulemnt le note ou plusieur notes
+            ->having('total_ratings', '>', 2) 
+            //get quoi
+            ->get();
+        //on recupere le meilleure note
+        $topMedia = $notes->sortByDesc('average_rating')->first();
+
+        if ($topMedia) {
+          $mediaFirst = Media::find($topMedia->media_id); 
+        }  
         $media = Media::orderBy('created_at','desc')->get();
-        return view('media.index', compact('media'));
+        return view('media.index', compact('media','mediaFirst','topMedia'));
     }
 
     /**
