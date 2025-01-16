@@ -22,6 +22,13 @@ Réseau Social Laravel - Mon compte
                 <input required type="text" class="form-control" placeholder="modifier" name="name"
                     value="{{ $user->name }}" id="name">
             </div>
+            <div class="form-group">
+                <label for="role" class="form-label">Role</label>
+                <select class="form-select" id="role" name="role_id" required>
+                    <option value="2" {{ (old('role', $user->role_id) == '2') ? 'selected' : '' }}>Admin</option>
+                    <option value="1" {{ (old('role', $user->role_id) == '1') ? 'selected' : '' }}>User</option>
+                </select>
+            </div>
 
 
             <button type="submit" class="btn btn-primary">Valider</button>

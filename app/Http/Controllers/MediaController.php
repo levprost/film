@@ -16,7 +16,7 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $media = Media::all();
+        $media = Media::orderBy('created_at','desc')->get();
         return view('media.index', compact('media'));
     }
 

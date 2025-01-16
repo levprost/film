@@ -14,7 +14,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('users',UserController::class)->except('index','create','store');
+Route::resource('users',UserController::class)->except('create','store');
+Route::get('/users/{user}/editrole', [UserController::class, 'editRole'])->name('user.editRole');
 Route::resource('media',MediaController::class);
 Route::resource('note',NoteController::class);
-Route::resource('genres',GenreController::class);
+Route::resource('genre',GenreController::class);

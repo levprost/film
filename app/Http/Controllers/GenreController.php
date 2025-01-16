@@ -22,8 +22,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-       $genres = Genre::all();
-       return view('genre.create', compact('genres'));
+       return view('genre.create');
     }
 
     /**

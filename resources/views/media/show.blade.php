@@ -59,6 +59,11 @@
                     <p class="card-text text-secondary">{{ Str::limit($note->comment, 100) }}</p>
                     <p>{{ $note->note_nmbr }}</p>
                     <a href="#" class="btn btn-link btn-sm">Lire plus</a>
+                    <form action="{{ route('note.destroy', $note->id)}}" method="POST" style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" type="submit">Supprimer</button>
+                                </form>
                 </div>
             </div>
         </div>
@@ -95,6 +100,7 @@
                         <input type="submit" class="btn btn-success" value="Add Comment" />
                     </div>
                 </form>
+                
       
         </div>
 

@@ -15,7 +15,8 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        $notes = Note::all();
+        return view('note.index', compact('notes'));
     }
 
     /**
@@ -30,23 +31,23 @@ class NoteController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'media_id' => 'required|exists:media,id',
-        'note_nmbr' => 'required|numeric|min:1|max:5',
-        'comment' => 'required|string|max:255',
-    ]);
+    {
+        $request->validate([
+            'media_id' => 'required|exists:media,id',
+            'note_nmbr' => 'required|numeric|min:1|max:5',
+            'comment' => 'required|string|max:255',
+        ]);
 
-    Note::create([
-        'media_id' => $request->input('media_id'),
-        'user_id' => Auth::id(), 
-        'note_nmbr' => $request->input('note_nmbr'),
-        'comment' => $request->input('comment'),
-    ]);
+        Note::create([
+            'media_id' => $request->input('media_id'),
+            'user_id' => Auth::id(), 
+            'note_nmbr' => $request->input('note_nmbr'),
+            'comment' => $request->input('comment'),
+        ]);
 
-    return redirect()->route('media.show', $request->input('media_id'))
-        ->with('success', 'Commentaire ajouté avec succès.');
-}
+        return redirect()->route('media.show', $request->input('media_id'))
+            ->with('success', 'Commentaire ajouté avec succès.');
+    }
 
 
     /**
@@ -78,6 +79,8 @@ class NoteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $notes = Note::findOrFail($id);
+        $notes ->delete();
+        return back()->with('success','Note supprimé avec succès');
     }
 }

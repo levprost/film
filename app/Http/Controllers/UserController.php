@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::user()->role_id === 2 ){
+            $users = User::all();
+            $role = Role::all();
+            return view('user.index', compact('users','role'));
+        }else{
+            return redirect('/media');
+        }
     }
 
     /**
@@ -45,20 +52,51 @@ class UserController extends Controller
      */
     public function edit(User $user) 
     { 
-    return view('user.edit', compact('user')); 
+        if (Auth::user()->id === $user->id || Auth::user()->role_id === 2 ) {
+            return view('user.edit', compact('user')); 
+        }else{
+            return redirect('/media')->with('error','No permission');
+        }
+    }
+    public function editRole(User $user) 
+    { 
+        if (Auth::user()->role_id === 2 ) {
+            return view('user.editrole', compact('user')); 
+        }else{
+            return redirect('/media')->with('error','No permission');
+        }
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user)
     {
-        $request->validate([ 
-            'name' => 'required|max:40', 
+        if (Auth::user()->id == $user->id){
+            $request->validate([ 
+            'name' => 'required|max:40',
           ]); 
             
           $user->update($request->all()); 
      
           return back()->with('message', 'Le compte a bien été modifié.'); 
+        }else{
+            return redirect()->back()->withErrors(['erreur' => 'Suppression du compte impossible']);
+        }
+    }
+    public function updateRole(Request $request, User $user)
+    {
+        if (Auth::user()->role_id === 2){
+            $request->validate([ 
+            'name' => 'required|max:40',
+            'role_id' => 'required|integer|exists:roles,id' 
+          ]); 
+            
+          $user->update($request->all()); 
+     
+          return back()->with('message', 'Le compte a bien été modifié.'); 
+        }else{
+            return redirect()->back()->withErrors(['erreur' => 'Suppression du compte impossible']);
+        }
     }
 
     /**
@@ -68,9 +106,9 @@ class UserController extends Controller
     { 
     // on vérifie que c'est bien l'utilisateur connecté qui fait la demande de suppression 
     // (les id doivent être identiques)  
-    if (Auth::user()->id == $user->id) { 
+    if (Auth::user()->id == $user->id || Auth::user()->role_id === 2) { 
         $user->delete(); 
-        return redirect()->route('home')->with('message', 'Le compte a bien été supprimé'); 
+        return redirect()->route('/media')->with('message', 'Le compte a bien été supprimé'); 
     } else { 
      return redirect()->back()->withErrors(['erreur' => 'Suppression du compte impossible']); 
     } 
