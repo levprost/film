@@ -22,17 +22,19 @@ class MediaController extends Controller
             //  Tous les media avec même 'media_id' sont regroupés.
             ->groupBy('media_id') 
             // On recuper seulemnt le note ou plusieur notes
-            ->having('total_ratings', '>', 2) 
+            ->having('total_ratings', '>', 1) 
             //get quoi
             ->get();
         //on recupere le meilleure note
+  
         $topMedia = $notes->sortByDesc('average_rating')->first();
-
+        $noteMedia = $notes->sortByDesc('average_rating');
+        
         if ($topMedia) {
           $mediaFirst = Media::find($topMedia->media_id); 
         }  
         $media = Media::orderBy('created_at','desc')->get();
-        return view('media.index', compact('media','mediaFirst','topMedia'));
+        return view('media.index', compact('media','mediaFirst','topMedia','noteMedia'));
     }
 
     /**

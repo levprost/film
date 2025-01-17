@@ -1,14 +1,17 @@
 .card {
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: solid #d57323;
+    transition: transform 0.6s ease, box-shadow 0.2s ease;
+	background: hsl(0, 0%, 0%);
+	color: #d57323;
 }
 .card:hover {
     transform: scale(1.03);
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 h3 {
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid #d57323;
     padding-bottom: 10px;
+	color: white;
 }
 .back {
 	background: linear-gradient(-45deg, #dd4d22, #000000, #d57323, #ffffff);
@@ -44,15 +47,15 @@ html {
 }
 .card-img-top {
 	-webkit-box-reflect: below 5px
-		linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.4));
-	-webkit-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
+		linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.3));
+	-webkit-transition: all 0.7s ease;
+	-o-transition: all 0.7s ease;
+	transition: all 0.7s ease;
+	color: white !important;
+	
 }
-.container img:hover {
-	-webkit-transform: scale(1.1);
-	-ms-transform: scale(1.1);
-	transform: scale(1.1);
+.card-body>p {
+	color: white !important;
 }
 .last {
 	margin-top: 6.5rem;
@@ -81,14 +84,19 @@ html {
 .title_wrapper h1 {
 	width: 70%;
 }
-button {
-	background: #f40612 !important;
-	color: #fff !important;
-	font-size: 18px;
-	padding: 0.5rem 3rem;
-	outline: none;
-	border: 0 !important;
+.stars {
+    display: inline-block;
 }
+
+.star {
+    font-size: 20px;
+    color: #ccc;
+}
+
+.star.filled {
+    color: #f39c12;
+}
+
 @media (max-width: 768px) {
 	.title_wrapper {
 		text-align: center;
