@@ -46,6 +46,9 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end bg-dark border-orange" aria-labelledby="navbarDropdown">
+                    
+                        <a class="nav-link text-orange" href="{{ route('users.edit', Auth::user()->id) }}">{{ __('Edit Profile') }}</a>
+
                         <a class="dropdown-item text-orange" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

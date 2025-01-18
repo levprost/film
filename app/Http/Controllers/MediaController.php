@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Episode;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Genre;
@@ -94,7 +95,7 @@ class MediaController extends Controller
         $note = Note::where('media_id',$id)->get();
         $user = User::where('id',$id)->get();
         $media = Media::where('id',$id)->get();
-
+        $episodes = Episode::where('media_id',$id)->get();
         $count = $note->count();
         if ($count > 0) {
             $final_note = $note->sum('note_nmbr') / $count;
@@ -104,7 +105,7 @@ class MediaController extends Controller
 
         
 
-        return view('media.show', compact('note','final_note','media'));
+        return view('media.show', compact('note','final_note','media','episodes'));
 
     }
 

@@ -15,4 +15,8 @@ class Media extends Model
     { 
         return $this->belongsTo(Genre::class); 
     } 
+    public function episodes()
+    {
+        return $this->hasMany(Episode::class, 'media_id', 'id_media');
+    }
 }

@@ -50,20 +50,32 @@
         @if($final_note)
         <p>{{ $final_note }}</p>
         @endif
+
+       
+        <h3>Episodes:</h3>
+        <ul>
+            @foreach($episodes->where('media_id', $media->id) as $ep)
+            <li>
+                <h4>{{ $ep->episode_name }} {{ $ep->episode_nmbr }}</h4>
+            </li>
+            @endforeach
+        </ul>
+       
+
         <!-- Добавление отзывов -->
         @foreach($note as $note)
         <div class="col-12 mt-2">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h6 class="card-title text-muted">Commentaires :</h6>
-                    <p class="card-text text-secondary">{{ Str::limit($note->comment, 100) }}</p>
+                    <p class="card-text text-secondary">{{ $note->comment }}</p>
                     <p>{{ $note->note_nmbr }}</p>
-                    <a href="#" class="btn btn-link btn-sm">Lire plus</a>
+
                     <form action="{{ route('note.destroy', $note->id)}}" method="POST" style="display: inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" type="submit">Supprimer</button>
-                                </form>
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm" type="submit">Supprimer</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -77,31 +89,31 @@
             </div>
             @endif
 
-                @method('PATCH')
+            @method('PATCH')
+            @csrf
+            <!---->
+            <form method="post" action="{{ route('note.store') }}">
                 @csrf
-                <!---->
-                <form method="post" action="{{ route('note.store') }}">
-                    @csrf
-                    <div class="form-group">
-                        <textarea class="form-control" name="comment"></textarea>
-                        <input type="hidden" name="media_id" value="{{ $media->id }}" />
-                    </div>
-                    <label for="note_nmbr" class="form-label">Оценка</label>
-                    <select name="note_nmbr" id="note_nmbr" class="form-control">
-                        <option value="">Выберите оценку</option>
-                        @for($i = 1; $i <= 5; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                    </select>
-                    @error('note_nmbr')
-                    <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-success" value="Add Comment" />
-                    </div>
-                </form>
-                
-      
+                <div class="form-group">
+                    <textarea class="form-control" name="comment"></textarea>
+                    <input type="hidden" name="media_id" value="{{ $media->id }}" />
+                </div>
+                <label for="note_nmbr" class="form-label">Оценка</label>
+                <select name="note_nmbr" id="note_nmbr" class="form-control">
+                    <option value="">Выберите оценку</option>
+                    @for($i = 1; $i <= 5; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
+                </select>
+                @error('note_nmbr')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Add Comment" />
+                </div>
+            </form>
+
+
         </div>
 
         @endforeach

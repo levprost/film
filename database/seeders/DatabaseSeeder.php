@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             MediaSeeder::class,
             UserSeeder::class,
             NoteSeeder::class,
+            EpisodeSeeder::class,
         ]);
     }
 }

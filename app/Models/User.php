@@ -21,6 +21,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Note::class);
     }
+    public function episodes() {  
+        return $this->belongsToMany(Episode::class); 
+    }
 
     protected $with = ['role']; 
 
