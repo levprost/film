@@ -33,7 +33,7 @@ class MediaController extends Controller
         if ($topMedia) {
           $mediaFirst = Media::find($topMedia->media_id); 
         }  
-        $media = Media::orderBy('created_at','desc')->get();
+        $media = Media::orderBy('created_at','desc','5')->get();
         return view('media.index', compact('media','mediaFirst','topMedia','noteMedia'));
     }
 

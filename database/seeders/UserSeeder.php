@@ -33,6 +33,6 @@ class UserSeeder extends Seeder
             'role_id' => 1
         ]);
 
-        User::factory(8)->create();
+        User::factory(40)->create();
     }
 }
